@@ -2,7 +2,10 @@
 A social media api using NodeJS and ExpressJS 
 
 ## Commands for running the app
+```markdown
 npm install
+```
+
 npm start 
 
 ## Testing the test-cases
