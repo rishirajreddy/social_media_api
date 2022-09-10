@@ -5,10 +5,13 @@ A social media api using NodeJS and ExpressJS
 ```markdown
 npm install
 ```
-
-npm start 
-
+```markdown
+npm start
+```
+ 
 ## Testing the test-cases
-npm test <br>
+```markdown
+npm test
+```
 <p>It will test the <b>routes.test.js</b> file </p>
 
