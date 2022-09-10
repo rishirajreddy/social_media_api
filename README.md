@@ -15,3 +15,7 @@ npm test
 ```
 <p>It will test the <b>routes.test.js</b> file </p>
 
+## Running docker file command
+```markdown
+docker run -p 49160:3000 -d rishirajdocker7/node-web-app
+```
