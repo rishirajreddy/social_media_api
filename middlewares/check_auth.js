@@ -6,7 +6,7 @@ let checkToken = (req,res,next) => {
     // console.log(token.slice(7, token.length));
     token = token.slice(7, token.length);
     if(token){
-        jwt.verify(token, process.env.JWT_KEY,(err,decoded) => {
+        jwt.verify(token, "secret-long-key",(err,decoded) => {
             if(err){
                 res.status(401).json({
                     msg: "Invalid Token",

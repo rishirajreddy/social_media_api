@@ -14,7 +14,7 @@ exports.register = async(req,res) => {
         password: hashedPassword
     })
     let token = jwt.sign({email: req.body.email}, 
-        process.env.JWT_KEY,
+        "secret-long-key",
         { expiresIn: '1h'}
     );
     await newUser.save()
@@ -44,7 +44,7 @@ exports.authenticate = async(req,res) => {
         const isCorrect = await bcrypt.compare(password, user.password);
         if(isCorrect){
             let token = jwt.sign({email: email},
-                process.env.JWT_KEY, {
+                "secret-long-key", {
                     expiresIn: "1h"
                 }
                 );
