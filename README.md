@@ -9,7 +9,7 @@ npm install
 npm start
 ```
  
-## Testing the test-cases
+## Running all the test-cases
 ```markdown
 npm test
 ```
