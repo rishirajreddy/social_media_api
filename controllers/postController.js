@@ -153,7 +153,7 @@ exports.getPost = async(req,res) => {
     .then((data) => {
         for (const post of data.posts) {
             if(post._id.toString() === req.params.id){
-                res.status(200).json(post);
+                res.status(200).send(post);
             }
         }
     })

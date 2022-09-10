@@ -98,7 +98,7 @@ describe('PATCH posts controllers', () => {
     //         expect(response.body).toStrictEqual({msg:"Post Deleted"})   
     //     })
     //  })
-
+    
     test('should return title is missing', () => { 
         return request(app).patch('/api/posts')
         .set('Authorization', `Bearer ${token}`)
@@ -133,7 +133,7 @@ describe('PATCH posts controllers', () => {
      })
 
     test('should return a particular post', async() => { 
-        return  request(app).post('/api/like/631aeaaa3226e577c6e18f60')
+        return  request(app).get('/api/posts/631b581672b82a325a586842')
         .set('Authorization', `Bearer ${token}`)
         .then((response) => {
             expect(response.statusCode).toBe(200);
