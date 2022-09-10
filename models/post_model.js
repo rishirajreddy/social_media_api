@@ -15,10 +15,12 @@ const Comment = new mongoose.Schema({
 })
 
 const Post = mongoose.Schema({
-    title:{ 
+    title:{
+        required: true, 
         type:String
     },
-    desc: {
+    desc: {        
+        required: true,
         type:String
     },
     created_at: {

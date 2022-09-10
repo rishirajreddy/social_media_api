@@ -6,21 +6,32 @@ exports.createPost = async(req,res) => {
 
     User.findOneAndUpdate(
         {email: req.decoded.email},
-        {
-            $addToSet: {
-                posts: {
-                    title: title,
-                    desc: desc
-                }
-            }
-        },
         {new: true},
         (err, data) => {
             if(err) {
                 console.log(err);
                 res.status(500).json({msg:"Unable to create post"})
-            }else{ 
-                res.status(500).json({msg:"Post Created",posts: data.posts})
+            }else{
+                    const post = {
+                        title: title,
+                        desc: desc
+                    }
+                    data.posts.push(post);
+                    data.save()
+                        .then(() => {
+                            res.status(200).send({msg:"Post Created"})
+                        })
+                        .catch(err => {
+                            const title_error = err.message.substring(39, err.message.length)
+                            const desc_error = err.message.substring(39, err.message.length)
+
+                            if(err.message.substring(39, err.message.length) === title_error){
+                                res.status(400).send({msg:"Title is required"})
+                            }else {
+                                res.status(400).send({msg:"Description is required"})
+                            }
+                            console.log(err.message);
+                        })
             }   
         }
         )
@@ -37,8 +48,8 @@ exports.deletePost = async(req,res) => {
             }
         },
         ).then((result) => {
-            console.log("Post Deleted");
-            res.status(200).json({msg:"Post Deleted", result})
+            // console.log("Post Del    eted");
+            res.status(200).send({msg:"Post Deleted"})
         })
         .catch(err => {
             console.log(err);
@@ -55,19 +66,18 @@ exports.likePost = async(req,res) => {
             }else {
                 for (const item of post.posts) {
                     if(item._id.toString() === req.params.id){
-                        if(!item.likedBy.includes(req.decoded.email)){
-                            item.likedBy.push(req.decoded.email);
+                            if(!item.likedBy.includes(req.decoded.email)){
+                                item.likedBy.push(req.decoded.email);
+                            }
                             post.save()
                                 .then((result) => {
-                                    res.status(200).json({msg:"Post Liked", result})
+                                    res.status(200).send({msg:"Post Liked", item})
                                 })   
                                 .catch(err => {
                                     res.status(500).json("BadRequest")
                                     console.log(err.message);
                                 })
-                        }else {
-                            res.json("Already Liked the post")                            
-                        }
+                        
                     }
                 }
             }
@@ -90,7 +100,7 @@ exports.unlikePost = async(req,res) => {
                             item.likedBy.splice(index, 1);
                             post.save()
                                 .then(() => {
-                                    res.json({msg:"Post Disliked", body: item})
+                                    res.json({msg:"Post Disliked", item})
                                 })
                                 .catch(err => {
                                     console.log(err);
@@ -123,7 +133,7 @@ exports.addComments = async(req,res) => {
                         item.comments.push(comment);
                         post.save()
                         .then((result) => {
-                            res.json({msg:"Commented Added", result})
+                            res.json({msg:"Commented Added", item})
                         })
                         .catch(err => {
                             console.log(err);
@@ -161,7 +171,7 @@ exports.getAllPosts = async(req,res) => {
                 postsArr.push(data.posts[i])
             }
             let sortedArr = postsArr.flat().sort((a, b) => compareDesc(parseISO(a.created_at), parseISO(b.created_at)));
-            res.json(sortedArr);
+            res.status(200).send({posts: sortedArr});
             console.log("Fetched");
         })
 }

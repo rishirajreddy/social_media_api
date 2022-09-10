@@ -48,11 +48,11 @@ exports.authenticate = async(req,res) => {
                     expiresIn: "1h"
                 }
                 );
-                console.log("Login Success");
-                res.status(200).json({
+                // console.log("Login Success");
+                res.status(200).send({
                     msg:"User Authentication Success",
                     user:email,
-                    token
+                    token:token
                 })
         }else {
             res.status(401).json({
@@ -91,12 +91,12 @@ exports.followUser = async(req,res) => {
                 }}
             ])
             .then((result) => {
-                console.log(result)
-                res.status(200).json({msg:`Following ${followedUserName} success`})
+                // console.log(result)
+                res.status(200).send({msg:`Following ${followedUserName} success`})
             })
             .catch(err => {
                 console.log(err.message);
-                res.status(500).json({err: err.message})
+                res.status(500).send({err: err.message})
             })
 }
 
@@ -124,8 +124,8 @@ exports.unfollowUser = async(req,res) => {
                 }}
             ])
             .then((result) => {
-                console.log(result);
-                res.status(200).json({msg:"UnFollowed", result})
+                // console.log(result);
+                res.status(200).send({msg:`Unfollowed ${followedUserName}`})
             })
             .catch(err => {
                 console.log(err);
@@ -136,7 +136,7 @@ exports.unfollowUser = async(req,res) => {
 exports.getUserDetails = async(req,res) => {
     User.findOne({email: req.decoded.email})
         .then((result) => {
-            res.status(200).json(result)
+            res.status(200).send(result)
         })
         .catch(err => {
             console.log(err.message);

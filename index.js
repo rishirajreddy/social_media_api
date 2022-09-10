@@ -11,8 +11,13 @@ app.use(express.json({extended: false}));
 
 app.use("/api", auth_routes, post_routes);
 
+
 app.get('/' , (req , res)=>{
    res.send('hello from simple server :)')
+})
+
+app.post('/data', (req,res) => {
+   res.send({token: 0});
 })
 
 module.exports = app;
