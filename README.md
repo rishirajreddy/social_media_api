@@ -2,7 +2,7 @@
 A social media api using NodeJS and ExpressJS 
 
 ## App is hosted on render. Below is the hosted link:
-<a href="https://socialmediaapi.onrender.com/">
+<a href="https://socialmediaapi.onrender.com/"> Hosted Link </a>
 
 ## Commands for running the app
 ```markdown
